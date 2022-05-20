@@ -1,0 +1,6 @@
+[book]
+authors = ["NoCtrlZ"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Artree NFT API Specification"
