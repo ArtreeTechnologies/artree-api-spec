@@ -135,6 +135,67 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="仕様"><a class="header" href="#仕様">仕様</a></h1>
+<h2 id="コントラクトのデプロイ"><a class="header" href="#コントラクトのデプロイ">コントラクトのデプロイ</a></h2>
+<p>まず初めに、プロジェクトに紐付くコントラクトをデプロイします。
+デプロイをするブロックチェーンとコントラクトで発行するNFTの名前とシンボルを決め以下のようにトランザクションを発行します。</p>
+<pre><code class="language-ts">import axios from 'axios';
+
+const url = 'https://api.artree.jp/contract/deploy'
+
+const request = {
+    symbol: &quot;ETH&quot;,
+    name: &quot;Ethereum&quot;,
+    chain: &quot;AST&quot;,
+    type: &quot;normal&quot;,
+    royalty: 0
+}
+
+const headers = {
+    Authorization: `Basic ${apiKey}:${apiSecret}`
+}
+
+// コントラクトのデプロイをリクエスト
+axios.post(url, request, {headers})
+</code></pre>
+<p>リクエストに必要なパラメータは以下のようになっています。</p>
+<table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
+<tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>request</td><td>symbol</td><td>発行するNFTのシンボルです。例、ETH。</td><td>✔️</td></tr>
+<tr><td></td><td>name</td><td>発行するNFTの名称です。例、Ethereum。</td><td>✔️</td></tr>
+<tr><td></td><td>chain</td><td>コントラクトをデプロイするブロックチェーンです。ETH, MATIC, ASTのどれか。</td><td>✔️</td></tr>
+<tr><td></td><td>type</td><td>コントラクトのタイプです。normal, royaltyのどちらか。</td><td>✔️</td></tr>
+<tr><td></td><td>royalty</td><td>コントラクトでのロイヤリティを定義します。</td><td>-</td></tr>
+<tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
+<tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
+<h2 id="nftの発行"><a class="header" href="#nftの発行">NFTの発行</a></h2>
+<p>デプロイしたコントラクトに対してリクエストを送りNFTを発行します。
+コントラクトの所有者と必要な情報を入力します。</p>
+<pre><code class="language-ts">import axios from 'axios';
+
+const url = 'https://api.artree.jp/nft/issue'
+
+const request = {
+    owner: &quot;0x6fA7BAB5fB3A644af160302de3Badc0958601b44&quot;,
+    args: [
+        &quot;https://static.artree.jp/img/assets/159&quot;
+    ]
+}
+
+const headers = {
+    Authorization: `Basic ${apiKey}:${apiSecret}`
+}
+
+// コントラクトのデプロイをリクエスト
+axios.post(url, request, {headers})
+</code></pre>
+<table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
+<tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>request</td><td>owner</td><td>NFTの所有者を入力します。入力がない場合は管理者に紐づきます。</td><td>-</td></tr>
+<tr><td></td><td>args</td><td>NFTを発行する際のメタデータです。デプロイしたコントラクトによって異なります。</td><td>✔️</td></tr>
+<tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
+<tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
 
                     </main>
 
@@ -156,20 +217,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
