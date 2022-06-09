@@ -26,3 +26,12 @@ const res = axios.get(url, {headers})
 | url | - | リクエストを送るurlです。ドメインは`api.artree.jp`でリクエストごとに以降のパスが変化します。 | ✔️ |
 | headers | apiKey | 認証用のAPI Keyです。 | ✔️ |
 | | apiSecret | 認証用のAPI Secretです。機密情報として管理してください。 | ✔️ |
+
+## レスポンスパラメータ
+
+| 項目 |  項目 |説明 | 型 |
+| ---- | ---- | ---- | ---- |
+| statusCode | _ | 処理に対するステータスです。 | 数字 |
+| status | _ | デプロイ処理のステータスです。`Deployed`であればデプロイが完了しています。 | "Pending", "Deployed", "Failed" |
+| contract | address | コントラクトのアドレスです。 | 文字列(42) |
+|| tx_hash | コントラクトをデプロイしたトランザクションハッシュです。 | 文字列(66) |
