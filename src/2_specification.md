@@ -13,16 +13,16 @@ APIをリクエストした後に、Artree APIを通してブロックチェー�
 
 ## NFT発行の流れ
 
-1. コントラクトのデプロイリクエスト
-2. コントラクトのデプロイ確認
-3. NFTの発行リクエスト
-4. NFTの発行確認
+1. [コントラクトのデプロイリクエスト](https://artreetechnologies.github.io/artree-api-spec/2_1_contract_deploy.html)
+2. [コントラクトのデプロイ確認](https://artreetechnologies.github.io/artree-api-spec/2_2_contract_status_check.html)
+3. [NFTの発行リクエスト](https://artreetechnologies.github.io/artree-api-spec/2_3_nft_issue.html)
+4. [NFTの発行確認](https://artreetechnologies.github.io/artree-api-spec/2_4_nft_status_check.html)
 
 NFTはスマートコントラクトのECR721という規格に基づいて発行されるため、スマートコントラクトをデプロイする必要があります。
 スマートコントラクトをデプロイした後にデプロイの確認を行い、処理が正常に終了したことを確認します。
 処理が正常に終了したことを確認したら、NFTの発行のリクエストを送信します。
 NFTを発行した後に発行の確認を行います。
-ブロックチェーン上で行われた処理は各種エクスプローラーにて確認することができます。
+ブロックチェーン上で行われた処理はトランザクションハッシュやアドレスを入力することで各種エクスプローラーにて確認することができます。
 
 ## エクスプローラー
 

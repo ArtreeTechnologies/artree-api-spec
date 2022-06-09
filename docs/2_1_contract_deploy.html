@@ -147,12 +147,13 @@ const request = {
     symbol: &quot;ETH&quot;,
     name: &quot;Ethereum&quot;,
     chain: &quot;AST&quot;,
+    baseUrl: &quot;https://example.com/images/&quot;,
     type: &quot;normal&quot;,
     royalty: 0
 }
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
 // コントラクトのデプロイをリクエスト
@@ -164,6 +165,7 @@ const res = axios.post(url, request, {headers})
 <tr><td>request</td><td>symbol</td><td>発行するNFTのシンボルです。例、ETH。</td><td>✔️</td></tr>
 <tr><td></td><td>name</td><td>発行するNFTの名称です。例、Ethereum。</td><td>✔️</td></tr>
 <tr><td></td><td>chain</td><td>コントラクトをデプロイするブロックチェーンです。ETH, MATIC, ASTのどれか。</td><td>✔️</td></tr>
+<tr><td></td><td>baseUrl</td><td>NFTの画像を保存するディレクトリ名を指定してください。</td><td>✔️</td></tr>
 <tr><td></td><td>type</td><td>コントラクトのタイプです。normal, royaltyのどちらか。</td><td>✔️</td></tr>
 <tr><td></td><td>royalty</td><td>コントラクトでのロイヤリティを定義します。</td><td>-</td></tr>
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>

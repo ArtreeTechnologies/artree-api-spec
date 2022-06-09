@@ -159,16 +159,16 @@ APIをリクエストした後に、Artree APIを通してブロックチェー�
 予めご了承ください。</p>
 <h2 id="nft発行の流れ"><a class="header" href="#nft発行の流れ">NFT発行の流れ</a></h2>
 <ol>
-<li>コントラクトのデプロイリクエスト</li>
-<li>コントラクトのデプロイ確認</li>
-<li>NFTの発行リクエスト</li>
-<li>NFTの発行確認</li>
+<li><a href="https://artreetechnologies.github.io/artree-api-spec/2_1_contract_deploy.html">コントラクトのデプロイリクエスト</a></li>
+<li><a href="https://artreetechnologies.github.io/artree-api-spec/2_2_contract_status_check.html">コントラクトのデプロイ確認</a></li>
+<li><a href="https://artreetechnologies.github.io/artree-api-spec/2_3_nft_issue.html">NFTの発行リクエスト</a></li>
+<li><a href="https://artreetechnologies.github.io/artree-api-spec/2_4_nft_status_check.html">NFTの発行確認</a></li>
 </ol>
 <p>NFTはスマートコントラクトのECR721という規格に基づいて発行されるため、スマートコントラクトをデプロイする必要があります。
 スマートコントラクトをデプロイした後にデプロイの確認を行い、処理が正常に終了したことを確認します。
 処理が正常に終了したことを確認したら、NFTの発行のリクエストを送信します。
 NFTを発行した後に発行の確認を行います。
-ブロックチェーン上で行われた処理は各種エクスプローラーにて確認することができます。</p>
+ブロックチェーン上で行われた処理はトランザクションハッシュやアドレスを入力することで各種エクスプローラーにて確認することができます。</p>
 <h2 id="エクスプローラー"><a class="header" href="#エクスプローラー">エクスプローラー</a></h2>
 <h3 id="本番"><a class="header" href="#本番">本番</a></h3>
 <ul>
@@ -193,12 +193,13 @@ const request = {
     symbol: &quot;ETH&quot;,
     name: &quot;Ethereum&quot;,
     chain: &quot;AST&quot;,
+    baseUrl: &quot;https://example.com/images/&quot;,
     type: &quot;normal&quot;,
     royalty: 0
 }
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
 // コントラクトのデプロイをリクエスト
@@ -210,6 +211,7 @@ const res = axios.post(url, request, {headers})
 <tr><td>request</td><td>symbol</td><td>発行するNFTのシンボルです。例、ETH。</td><td>✔️</td></tr>
 <tr><td></td><td>name</td><td>発行するNFTの名称です。例、Ethereum。</td><td>✔️</td></tr>
 <tr><td></td><td>chain</td><td>コントラクトをデプロイするブロックチェーンです。ETH, MATIC, ASTのどれか。</td><td>✔️</td></tr>
+<tr><td></td><td>baseUrl</td><td>NFTの画像を保存するディレクトリ名を指定してください。</td><td>✔️</td></tr>
 <tr><td></td><td>type</td><td>コントラクトのタイプです。normal, royaltyのどちらか。</td><td>✔️</td></tr>
 <tr><td></td><td>royalty</td><td>コントラクトでのロイヤリティを定義します。</td><td>-</td></tr>
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
@@ -230,10 +232,10 @@ const deployId = 'b916f448-759c-ef52-2c52-95d42c078ae6'
 const url = `https://api.artree.jp/contract/deploy/status/${deployId}`
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
-// コントラクトのデプロイをリクエスト
+// コントラクトのステータスを取得
 const res = axios.get(url, {headers})
 </code></pre>
 <h2 id="リクエストパラメータ-1"><a class="header" href="#リクエストパラメータ-1">リクエストパラメータ</a></h2>
@@ -256,27 +258,36 @@ const res = axios.get(url, {headers})
 <pre><code class="language-ts">import axios from 'axios';
 
 const url = 'https://api.artree.jp/nft/issue'
+const nftUrl = 'image.png'
 
 const request = {
     owner: &quot;0x6fA7BAB5fB3A644af160302de3Badc0958601b44&quot;,
     args: [
-        &quot;https://static.artree.jp/img/assets/159&quot;
+        nftUrl
     ]
 }
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
-// コントラクトのデプロイをリクエスト
+// NFTの発行をリクエスト
 const res = axios.post(url, request, {headers})
 </code></pre>
+<h2 id="リクエストパラメータ-2"><a class="header" href="#リクエストパラメータ-2">リクエストパラメータ</a></h2>
 <table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
 <tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>nftUrl</td><td>-</td><td>NFTの画像のファイル名です。コントラクトデプロイの際の<code>baseUrl</code> + <code>nftUrl</code>で画像が表示されるように設定してください。</td><td>✔️</td></tr>
 <tr><td>request</td><td>owner</td><td>NFTの所有者を入力します。入力がない場合は管理者に紐づきます。</td><td>-</td></tr>
 <tr><td></td><td>args</td><td>NFTを発行する際のメタデータです。デプロイしたコントラクトによって異なります。</td><td>✔️</td></tr>
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
 <tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
+<h2 id="レスポンスパラメータ-2"><a class="header" href="#レスポンスパラメータ-2">レスポンスパラメータ</a></h2>
+<table><thead><tr><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
+<tr><td>statusCode</td><td>処理に対するステータスです。</td><td>数字</td></tr>
+<tr><td>msg</td><td>ステータスに関する付加的なメッセージです。</td><td>文字列</td></tr>
+<tr><td>nft_id</td><td>NFTの発行ステータスを確認するIDです。</td><td>文字列(64)</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nftの発行ステータス確認"><a class="header" href="#nftの発行ステータス確認">NFTの発行ステータス確認</a></h1>
 

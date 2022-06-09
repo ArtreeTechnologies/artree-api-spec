@@ -7,26 +7,38 @@
 import axios from 'axios';
 
 const url = 'https://api.artree.jp/nft/issue'
+const nftUrl = 'image.png'
 
 const request = {
     owner: "0x6fA7BAB5fB3A644af160302de3Badc0958601b44",
     args: [
-        "https://static.artree.jp/img/assets/159"
+        nftUrl
     ]
 }
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
-// コントラクトのデプロイをリクエスト
+// NFTの発行をリクエスト
 const res = axios.post(url, request, {headers})
 ```
+
+## リクエストパラメータ
 
 | 変数 | 項目 | 説明 | 必須 |
 | ---- | ---- | ---- | ---- |
 | url | - | リクエストを送るurlです。ドメインは`api.artree.jp`でリクエストごとに以降のパスが変化します。 | ✔️ |
+| nftUrl | - | NFTの画像のファイル名です。コントラクトデプロイの際の`baseUrl` + `nftUrl`で画像が表示されるように設定してください。 | ✔️ |
 | request | owner | NFTの所有者を入力します。入力がない場合は管理者に紐づきます。 | - |
 | | args | NFTを発行する際のメタデータです。デプロイしたコントラクトによって異なります。 | ✔️ |
 | headers | apiKey | 認証用のAPI Keyです。 | ✔️ |
 | | apiSecret | 認証用のAPI Secretです。機密情報として管理してください。 | ✔️ |
+
+## レスポンスパラメータ
+
+| 項目 | 説明 | 型 |
+| ---- | ---- | ---- |
+| statusCode | 処理に対するステータスです。 | 数字 |
+| msg | ステータスに関する付加的なメッセージです。 | 文字列 |
+| nft_id | NFTの発行ステータスを確認するIDです。 | 文字列(64) |

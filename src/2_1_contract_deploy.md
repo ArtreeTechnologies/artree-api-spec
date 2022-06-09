@@ -14,12 +14,13 @@ const request = {
     symbol: "ETH",
     name: "Ethereum",
     chain: "AST",
+    baseUrl: "https://example.com/images/",
     type: "normal",
     royalty: 0
 }
 
 const headers = {
-    Authorization: `Basic ${apiKey}:${apiSecret}`
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
 }
 
 // コントラクトのデプロイをリクエスト
@@ -34,6 +35,7 @@ const res = axios.post(url, request, {headers})
 | request | symbol | 発行するNFTのシンボルです。例、ETH。 | ✔️ |
 | | name | 発行するNFTの名称です。例、Ethereum。 | ✔️ |
 | | chain | コントラクトをデプロイするブロックチェーンです。ETH, MATIC, ASTのどれか。 | ✔️ |
+| | baseUrl | NFTの画像を保存するディレクトリ名を指定してください。 | ✔️ |
 | | type | コントラクトのタイプです。normal, royaltyのどちらか。 | ✔️ |
 | | royalty | コントラクトでのロイヤリティを定義します。 | - |
 | headers | apiKey | 認証用のAPI Keyです。 | ✔️ |
