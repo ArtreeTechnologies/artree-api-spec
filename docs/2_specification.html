@@ -134,7 +134,38 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="仕様"><a class="header" href="#仕様">仕様</a></h1>
+                        <h1 id="api仕様一覧"><a class="header" href="#api仕様一覧">API仕様一覧</a></h1>
+<p>このドキュメントではNFT APIの仕様についてまとめられています。
+リクエストを送る際のパラメータとシステムから返されるレスポンスの型が定義されています。</p>
+<h2 id="はじめに"><a class="header" href="#はじめに">はじめに</a></h2>
+<p>ブロックチェーン上でコントラクトのデプロイやNFTの発行を行うにあたり、処理の待ち時間が発生します。
+APIをリクエストした後に、Artree APIを通してブロックチェーン上へ処理がリクエストされます。
+ブロックチェーン上での処理は他のユーザーが送信しようとしているトランザクション数に依存しますが、通例では10分ほどで完了します。
+このような性質があるため全ての処理はリクエストとステータスの確認に分かれています。
+予めご了承ください。</p>
+<h2 id="nft発行の流れ"><a class="header" href="#nft発行の流れ">NFT発行の流れ</a></h2>
+<ol>
+<li>コントラクトのデプロイリクエスト</li>
+<li>コントラクトのデプロイ確認</li>
+<li>NFTの発行リクエスト</li>
+<li>NFTの発行確認</li>
+</ol>
+<p>NFTはスマートコントラクトのECR721という規格に基づいて発行されるため、スマートコントラクトをデプロイする必要があります。
+スマートコントラクトをデプロイした後にデプロイの確認を行い、処理が正常に終了したことを確認します。
+処理が正常に終了したことを確認したら、NFTの発行のリクエストを送信します。
+NFTを発行した後に発行の確認を行います。
+ブロックチェーン上で行われた処理は各種エクスプローラーにて確認することができます。</p>
+<h2 id="エクスプローラー"><a class="header" href="#エクスプローラー">エクスプローラー</a></h2>
+<h3 id="本番"><a class="header" href="#本番">本番</a></h3>
+<ul>
+<li><a href="https://etherscan.io/">Ethereum</a></li>
+<li><a href="https://polygonscan.com/">Polygon</a></li>
+<li><a href="https://astar.subscan.io/">Astar</a></li>
+</ul>
+<h3 id="テスト"><a class="header" href="#テスト">テスト</a></h3>
+<ul>
+<li><a href="https://shibuya.subscan.io/">Shibuya</a></li>
+</ul>
 
                     </main>
 
@@ -162,20 +193,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

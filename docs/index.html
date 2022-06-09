@@ -145,7 +145,8 @@ ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行す
 <li>キーとシークレットを用いてコントラクトのデプロイをリクエスト</li>
 <li>デプロイされたコントラクトに対してNFTを発行</li>
 </ol>
-<p>利用できるAPIの仕様は<a href="./2_specification.html">仕様</a>に記載されています。</p>
+<p>利用できるAPIの仕様は<a href="./2_specification.html">API仕様一覧</a>に記載されています。</p>
+<p>Web RPCを用いてのリクエストを行うため、どの言語でも利用いただけます。</p>
 
                     </main>
 
@@ -167,20 +168,6 @@ ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行す
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3000/__livereload");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
