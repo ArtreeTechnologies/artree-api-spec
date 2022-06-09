@@ -159,7 +159,7 @@ const res = axios.get(url, {headers})
 <h2 id="レスポンスパラメータ"><a class="header" href="#レスポンスパラメータ">レスポンスパラメータ</a></h2>
 <table><thead><tr><th>項目</th><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
 <tr><td>statusCode</td><td>_</td><td>処理に対するステータスです。</td><td>数字</td></tr>
-<tr><td>status</td><td>_</td><td>デプロイ処理のステータスです。<code>Deployed</code>であればデプロイが完了しています。</td><td>&quot;Pending&quot;, &quot;Deployed&quot;, &quot;Failed&quot;</td></tr>
+<tr><td>status</td><td>_</td><td>デプロイ処理のステータスです。<code>DEPLOYED</code>であればデプロイが完了しています。</td><td>&quot;PENDING&quot;, &quot;DEPLOYED&quot;, &quot;FAILED&quot;</td></tr>
 <tr><td>contract</td><td>address</td><td>コントラクトのアドレスです。</td><td>文字列(42)</td></tr>
 <tr><td></td><td>tx_hash</td><td>コントラクトをデプロイしたトランザクションハッシュです。</td><td>文字列(66)</td></tr>
 </tbody></table>

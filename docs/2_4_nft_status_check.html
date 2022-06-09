@@ -135,6 +135,33 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="nftの発行ステータス確認"><a class="header" href="#nftの発行ステータス確認">NFTの発行ステータス確認</a></h1>
+<p>NFTの発行をリクエストした後に、NFTの発行ステータスを確認します。</p>
+<pre><code class="language-ts">import axios from 'axios';
+
+const issueId = '7973eec7-0071-5a9d-54fd-00bd4a377f10'
+const url = `https://api.artree.jp/nft/issue/status/${issueId}`
+
+const headers = {
+    Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
+}
+
+// NFTの発行ステータスを取得
+const res = axios.get(url, {headers})
+</code></pre>
+<h2 id="リクエストパラメータ"><a class="header" href="#リクエストパラメータ">リクエストパラメータ</a></h2>
+<table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
+<tr><td>issueId</td><td>_</td><td>ステータスを確認するNFTの発行リクエストのIDです。</td><td>✔️</td></tr>
+<tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
+<tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
+<h2 id="レスポンスパラメータ"><a class="header" href="#レスポンスパラメータ">レスポンスパラメータ</a></h2>
+<table><thead><tr><th>項目</th><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
+<tr><td>statusCode</td><td>_</td><td>処理に対するステータスです。</td><td>数字</td></tr>
+<tr><td>status</td><td>_</td><td>デプロイ処理のステータスです。<code>ISSUED</code>であればNFT発行が完了しています。</td><td>&quot;PENDING&quot;, &quot;ISSUED&quot;, &quot;FAILED&quot;</td></tr>
+<tr><td>nft</td><td>id</td><td>NFTのIDです。</td><td>数字</td></tr>
+<tr><td></td><td>tx_hash</td><td>NFTを発行したトランザクションハッシュです。</td><td>文字列(66)</td></tr>
+</tbody></table>
 
                     </main>
 

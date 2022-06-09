@@ -32,6 +32,6 @@ const res = axios.get(url, {headers})
 | 項目 |  項目 |説明 | 型 |
 | ---- | ---- | ---- | ---- |
 | statusCode | _ | 処理に対するステータスです。 | 数字 |
-| status | _ | デプロイ処理のステータスです。`Deployed`であればデプロイが完了しています。 | "Pending", "Deployed", "Failed" |
+| status | _ | デプロイ処理のステータスです。`DEPLOYED`であればデプロイが完了しています。 | "PENDING", "DEPLOYED", "FAILED" |
 | contract | address | コントラクトのアドレスです。 | 文字列(42) |
 || tx_hash | コントラクトをデプロイしたトランザクションハッシュです。 | 文字列(66) |
