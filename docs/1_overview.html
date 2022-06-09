@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html" class="active"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> 仕様</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html" class="active"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> API仕様一覧</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2_1_contract_deploy.html"><strong aria-hidden="true">2.1.</strong> コントラクトのデプロイリクエスト</a></li><li class="chapter-item expanded "><a href="2_2_contract_status_check.html"><strong aria-hidden="true">2.2.</strong> コントラクトのデプロイステータス確認</a></li><li class="chapter-item expanded "><a href="2_3_nft_issue.html"><strong aria-hidden="true">2.3.</strong> NFTの発行リクエスト</a></li><li class="chapter-item expanded "><a href="2_4_nft_status_check.html"><strong aria-hidden="true">2.4.</strong> NFTの発行ステータス確認</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,6 +167,20 @@ ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行す
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> 仕様</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> API仕様一覧</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2_1_contract_deploy.html"><strong aria-hidden="true">2.1.</strong> コントラクトのデプロイリクエスト</a></li><li class="chapter-item expanded "><a href="2_2_contract_status_check.html"><strong aria-hidden="true">2.2.</strong> コントラクトのデプロイステータス確認</a></li><li class="chapter-item expanded "><a href="2_3_nft_issue.html"><strong aria-hidden="true">2.3.</strong> NFTの発行リクエスト</a></li><li class="chapter-item expanded "><a href="2_4_nft_status_check.html"><strong aria-hidden="true">2.4.</strong> NFTの発行ステータス確認</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,9 +148,11 @@ ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行す
 </ol>
 <p>利用できるAPIの仕様は<a href="./2_specification.html">仕様</a>に記載されています。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="仕様"><a class="header" href="#仕様">仕様</a></h1>
-<h2 id="コントラクトのデプロイ"><a class="header" href="#コントラクトのデプロイ">コントラクトのデプロイ</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コントラクトのデプロイ"><a class="header" href="#コントラクトのデプロイ">コントラクトのデプロイ</a></h1>
 <p>まず初めに、プロジェクトに紐付くコントラクトをデプロイします。
-デプロイをするブロックチェーンとコントラクトで発行するNFTの名前とシンボルを決め以下のようにトランザクションを発行します。</p>
+デプロイをするブロックチェーンとコントラクトで発行するNFTの名前とシンボルを決め以下のようにトランザクションを発行します。
+コントラクトのデプロイ処理はそれぞれのブロックチェーンネットワークで所要時間が変わります。
+そのため、デプロイをリクエストした後に、デプロイのステータスを確認する必要があります。</p>
 <pre><code class="language-ts">import axios from 'axios';
 
 const url = 'https://api.artree.jp/contract/deploy'
@@ -168,9 +170,9 @@ const headers = {
 }
 
 // コントラクトのデプロイをリクエスト
-axios.post(url, request, {headers})
+const res = axios.post(url, request, {headers})
 </code></pre>
-<p>リクエストに必要なパラメータは以下のようになっています。</p>
+<h2 id="リクエストパラメータ"><a class="header" href="#リクエストパラメータ">リクエストパラメータ</a></h2>
 <table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
 <tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
 <tr><td>request</td><td>symbol</td><td>発行するNFTのシンボルです。例、ETH。</td><td>✔️</td></tr>
@@ -181,7 +183,35 @@ axios.post(url, request, {headers})
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
 <tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
 </tbody></table>
-<h2 id="nftの発行"><a class="header" href="#nftの発行">NFTの発行</a></h2>
+<h2 id="レスポンスパラメータ"><a class="header" href="#レスポンスパラメータ">レスポンスパラメータ</a></h2>
+<table><thead><tr><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
+<tr><td>statusCode</td><td>処理に対するステータスです。</td><td>数字</td></tr>
+<tr><td>msg</td><td>ステータスに関する付加的なメッセージです。</td><td>文字列</td></tr>
+<tr><td>deploy_id</td><td>デプロイのステータスを確認するIDです。</td><td>文字列(64)</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="デプロイのステータス確認"><a class="header" href="#デプロイのステータス確認">デプロイのステータス確認</a></h1>
+<p>コントラクトのデプロイをリクエストした後に、デプロイの処理のステータスを確認します。
+デプロイが完了した場合にNFTの発行を行うことができます。</p>
+<pre><code class="language-ts">import axios from 'axios';
+
+const deployId = 'b916f448-759c-ef52-2c52-95d42c078ae6'
+const url = `https://api.artree.jp/contract/deploy/status/${deployId}`
+
+const headers = {
+    Authorization: `Basic ${apiKey}:${apiSecret}`
+}
+
+// コントラクトのデプロイをリクエスト
+const res = axios.get(url, {headers})
+</code></pre>
+<h2 id="リクエストパラメータ-1"><a class="header" href="#リクエストパラメータ-1">リクエストパラメータ</a></h2>
+<table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
+<tr><td>deployId</td><td>_</td><td>ステータスを確認するデプロイリクエストのIDです。</td><td>✔️</td></tr>
+<tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
+<tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nftの発行"><a class="header" href="#nftの発行">NFTの発行</a></h1>
 <p>デプロイしたコントラクトに対してリクエストを送りNFTを発行します。
 コントラクトの所有者と必要な情報を入力します。</p>
 <pre><code class="language-ts">import axios from 'axios';
@@ -200,7 +230,7 @@ const headers = {
 }
 
 // コントラクトのデプロイをリクエスト
-axios.post(url, request, {headers})
+const res = axios.post(url, request, {headers})
 </code></pre>
 <table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
 <tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
@@ -209,6 +239,7 @@ axios.post(url, request, {headers})
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
 <tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
 </tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nftの発行ステータス確認"><a class="header" href="#nftの発行ステータス確認">NFTの発行ステータス確認</a></h1>
 
                     </main>
 
@@ -224,6 +255,20 @@ axios.post(url, request, {headers})
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

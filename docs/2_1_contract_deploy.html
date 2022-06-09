@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>概要 - Artree NFT API Specification</title>
+        <title>コントラクトのデプロイリクエスト - Artree NFT API Specification</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> API仕様一覧</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2_1_contract_deploy.html"><strong aria-hidden="true">2.1.</strong> コントラクトのデプロイリクエスト</a></li><li class="chapter-item expanded "><a href="2_2_contract_status_check.html"><strong aria-hidden="true">2.2.</strong> コントラクトのデプロイステータス確認</a></li><li class="chapter-item expanded "><a href="2_3_nft_issue.html"><strong aria-hidden="true">2.3.</strong> NFTの発行リクエスト</a></li><li class="chapter-item expanded "><a href="2_4_nft_status_check.html"><strong aria-hidden="true">2.4.</strong> NFTの発行ステータス確認</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="1_overview.html"><strong aria-hidden="true">1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="2_specification.html"><strong aria-hidden="true">2.</strong> API仕様一覧</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="2_1_contract_deploy.html" class="active"><strong aria-hidden="true">2.1.</strong> コントラクトのデプロイリクエスト</a></li><li class="chapter-item expanded "><a href="2_2_contract_status_check.html"><strong aria-hidden="true">2.2.</strong> コントラクトのデプロイステータス確認</a></li><li class="chapter-item expanded "><a href="2_3_nft_issue.html"><strong aria-hidden="true">2.3.</strong> NFTの発行リクエスト</a></li><li class="chapter-item expanded "><a href="2_4_nft_status_check.html"><strong aria-hidden="true">2.4.</strong> NFTの発行ステータス確認</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,24 +134,56 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="概要"><a class="header" href="#概要">概要</a></h1>
-<p>Artree NFT APIはブロックチェーンの知識や開発力がなくても簡単にNFTを発行できるサービスです。
-ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行することができます。
-全てのリクエストはWeb RPCを通して行われるのでhttpのJSONのリクエストのみでブロックチェーンをアプリケーションに組み込むことができます。</p>
-<h2 id="始める"><a class="header" href="#始める">始める</a></h2>
-<p>以下の手順でNFTの発行機能をアプリケーションに追加できます。</p>
-<ol>
-<li>APIキーとAPIシークレットを取得</li>
-<li>キーとシークレットを用いてコントラクトのデプロイをリクエスト</li>
-<li>デプロイされたコントラクトに対してNFTを発行</li>
-</ol>
-<p>利用できるAPIの仕様は<a href="./2_specification.html">仕様</a>に記載されています。</p>
+                        <h1 id="コントラクトのデプロイ"><a class="header" href="#コントラクトのデプロイ">コントラクトのデプロイ</a></h1>
+<p>まず初めに、プロジェクトに紐付くコントラクトをデプロイします。
+デプロイをするブロックチェーンとコントラクトで発行するNFTの名前とシンボルを決め以下のようにトランザクションを発行します。
+コントラクトのデプロイ処理はそれぞれのブロックチェーンネットワークで所要時間が変わります。
+そのため、デプロイをリクエストした後に、デプロイのステータスを確認する必要があります。</p>
+<pre><code class="language-ts">import axios from 'axios';
+
+const url = 'https://api.artree.jp/contract/deploy'
+
+const request = {
+    symbol: &quot;ETH&quot;,
+    name: &quot;Ethereum&quot;,
+    chain: &quot;AST&quot;,
+    type: &quot;normal&quot;,
+    royalty: 0
+}
+
+const headers = {
+    Authorization: `Basic ${apiKey}:${apiSecret}`
+}
+
+// コントラクトのデプロイをリクエスト
+const res = axios.post(url, request, {headers})
+</code></pre>
+<h2 id="リクエストパラメータ"><a class="header" href="#リクエストパラメータ">リクエストパラメータ</a></h2>
+<table><thead><tr><th>変数</th><th>項目</th><th>説明</th><th>必須</th></tr></thead><tbody>
+<tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
+<tr><td>request</td><td>symbol</td><td>発行するNFTのシンボルです。例、ETH。</td><td>✔️</td></tr>
+<tr><td></td><td>name</td><td>発行するNFTの名称です。例、Ethereum。</td><td>✔️</td></tr>
+<tr><td></td><td>chain</td><td>コントラクトをデプロイするブロックチェーンです。ETH, MATIC, ASTのどれか。</td><td>✔️</td></tr>
+<tr><td></td><td>type</td><td>コントラクトのタイプです。normal, royaltyのどちらか。</td><td>✔️</td></tr>
+<tr><td></td><td>royalty</td><td>コントラクトでのロイヤリティを定義します。</td><td>-</td></tr>
+<tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
+<tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
+</tbody></table>
+<h2 id="レスポンスパラメータ"><a class="header" href="#レスポンスパラメータ">レスポンスパラメータ</a></h2>
+<table><thead><tr><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
+<tr><td>statusCode</td><td>処理に対するステータスです。</td><td>数字</td></tr>
+<tr><td>msg</td><td>ステータスに関する付加的なメッセージです。</td><td>文字列</td></tr>
+<tr><td>deploy_id</td><td>デプロイのステータスを確認するIDです。</td><td>文字列(64)</td></tr>
+</tbody></table>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="2_specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="prev" href="2_specification.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="2_2_contract_status_check.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -160,7 +192,10 @@ ERC721とERC2981の規格に準じたNFTをAstar, EthereumとPolygonで発行す
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="2_specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="prev" href="2_specification.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="2_2_contract_status_check.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
