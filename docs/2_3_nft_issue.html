@@ -144,6 +144,7 @@ const nftUrl = 'image.png'
 
 const request = {
     owner: &quot;0x6fA7BAB5fB3A644af160302de3Badc0958601b44&quot;,
+    chain: &quot;AST&quot;,
     args: [
         nftUrl
     ]
@@ -161,6 +162,7 @@ const res = axios.post(url, request, {headers})
 <tr><td>url</td><td>-</td><td>リクエストを送るurlです。ドメインは<code>api.artree.jp</code>でリクエストごとに以降のパスが変化します。</td><td>✔️</td></tr>
 <tr><td>nftUrl</td><td>-</td><td>NFTの画像のファイル名です。コントラクトデプロイの際の<code>baseUrl</code> + <code>nftUrl</code>で画像が表示されるように設定してください。</td><td>✔️</td></tr>
 <tr><td>request</td><td>owner</td><td>NFTの所有者を入力します。入力がない場合は管理者に紐づきます。</td><td>-</td></tr>
+<tr><td></td><td>chain</td><td>NFTを発行するブロックチェーンを入力します。</td><td>✔️</td></tr>
 <tr><td></td><td>args</td><td>NFTを発行する際のメタデータです。デプロイしたコントラクトによって異なります。</td><td>✔️</td></tr>
 <tr><td>headers</td><td>apiKey</td><td>認証用のAPI Keyです。</td><td>✔️</td></tr>
 <tr><td></td><td>apiSecret</td><td>認証用のAPI Secretです。機密情報として管理してください。</td><td>✔️</td></tr>
