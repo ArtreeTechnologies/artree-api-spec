@@ -43,4 +43,4 @@ const res = axios.post(url, request, {headers})
 | ---- | ---- | ---- |
 | statusCode | 処理に対するステータスです。 | 数字 |
 | msg | ステータスに関する付加的なメッセージです。 | 文字列 |
-| nft_id | NFTの発行ステータスを確認するIDです。 | 文字列(64) |
+| issue_id | NFTの発行ステータスを確認するIDです。 | 文字列(64) |
