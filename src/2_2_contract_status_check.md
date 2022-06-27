@@ -8,7 +8,7 @@
 import axios from 'axios';
 
 const deployId = 'b916f448-759c-ef52-2c52-95d42c078ae6'
-const url = `https://api.artree.jp/contract/deploy/status/${deployId}`
+const url = `https://staging.api.artree.jp/contract/deploy/status/${deployId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`

@@ -6,7 +6,7 @@ NFTの発行をリクエストした後に、NFTの発行ステータスを確�
 import axios from 'axios';
 
 const issueId = '7973eec7-0071-5a9d-54fd-00bd4a377f10'
-const url = `https://api.artree.jp/nft/issue/status/${issueId}`
+const url = `https://staging.api.artree.jp/nft/issue/status/${issueId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`

@@ -140,7 +140,7 @@
 <pre><code class="language-ts">import axios from 'axios';
 
 const deployId = 'b916f448-759c-ef52-2c52-95d42c078ae6'
-const url = `https://api.artree.jp/contract/deploy/status/${deployId}`
+const url = `https://staging.api.artree.jp/contract/deploy/status/${deployId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
@@ -190,6 +190,20 @@ const res = axios.get(url, {headers})
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

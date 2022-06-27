@@ -141,14 +141,14 @@
 そのため、デプロイをリクエストした後に、デプロイのステータスを確認する必要があります。</p>
 <pre><code class="language-ts">import axios from 'axios';
 
-const url = 'https://api.artree.jp/contract/deploy'
+const url = 'https://staging.api.artree.jp/contract/deploy'
 
 const request = {
     symbol: &quot;ETH&quot;,
     name: &quot;Ethereum&quot;,
     chain: &quot;AST&quot;,
     baseUrl: &quot;https://example.com/images/&quot;,
-    type: &quot;normal&quot;,
+    type: &quot;NORMAL&quot;,
     royalty: 0
 }
 
@@ -204,6 +204,20 @@ const res = axios.post(url, request, {headers})
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

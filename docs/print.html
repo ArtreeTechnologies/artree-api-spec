@@ -187,14 +187,14 @@ NFTを発行した後に発行の確認を行います。
 そのため、デプロイをリクエストした後に、デプロイのステータスを確認する必要があります。</p>
 <pre><code class="language-ts">import axios from 'axios';
 
-const url = 'https://api.artree.jp/contract/deploy'
+const url = 'https://staging.api.artree.jp/contract/deploy'
 
 const request = {
     symbol: &quot;ETH&quot;,
     name: &quot;Ethereum&quot;,
     chain: &quot;AST&quot;,
     baseUrl: &quot;https://example.com/images/&quot;,
-    type: &quot;normal&quot;,
+    type: &quot;NORMAL&quot;,
     royalty: 0
 }
 
@@ -229,7 +229,7 @@ const res = axios.post(url, request, {headers})
 <pre><code class="language-ts">import axios from 'axios';
 
 const deployId = 'b916f448-759c-ef52-2c52-95d42c078ae6'
-const url = `https://api.artree.jp/contract/deploy/status/${deployId}`
+const url = `https://staging.api.artree.jp/contract/deploy/status/${deployId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
@@ -257,7 +257,7 @@ const res = axios.get(url, {headers})
 コントラクトの所有者と必要な情報を入力します。</p>
 <pre><code class="language-ts">import axios from 'axios';
 
-const url = 'https://api.artree.jp/nft/issue'
+const url = 'https://staging.api.artree.jp/nft/issue'
 const nftUrl = 'image.png'
 
 const request = {
@@ -289,14 +289,14 @@ const res = axios.post(url, request, {headers})
 <table><thead><tr><th>項目</th><th>説明</th><th>型</th></tr></thead><tbody>
 <tr><td>statusCode</td><td>処理に対するステータスです。</td><td>数字</td></tr>
 <tr><td>msg</td><td>ステータスに関する付加的なメッセージです。</td><td>文字列</td></tr>
-<tr><td>nft_id</td><td>NFTの発行ステータスを確認するIDです。</td><td>文字列(64)</td></tr>
+<tr><td>issue_id</td><td>NFTの発行ステータスを確認するIDです。</td><td>文字列(64)</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nftの発行ステータス確認"><a class="header" href="#nftの発行ステータス確認">NFTの発行ステータス確認</a></h1>
 <p>NFTの発行をリクエストした後に、NFTの発行ステータスを確認します。</p>
 <pre><code class="language-ts">import axios from 'axios';
 
 const issueId = '7973eec7-0071-5a9d-54fd-00bd4a377f10'
-const url = `https://api.artree.jp/nft/issue/status/${issueId}`
+const url = `https://staging.api.artree.jp/nft/issue/status/${issueId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
@@ -334,6 +334,20 @@ const res = axios.get(url, {headers})
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

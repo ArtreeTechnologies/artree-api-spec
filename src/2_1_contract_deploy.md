@@ -8,14 +8,14 @@
 ```ts
 import axios from 'axios';
 
-const url = 'https://api.artree.jp/contract/deploy'
+const url = 'https://staging.api.artree.jp/contract/deploy'
 
 const request = {
     symbol: "ETH",
     name: "Ethereum",
     chain: "AST",
     baseUrl: "https://example.com/images/",
-    type: "normal",
+    type: "NORMAL",
     royalty: 0
 }
 

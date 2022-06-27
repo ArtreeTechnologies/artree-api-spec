@@ -139,7 +139,7 @@
 <pre><code class="language-ts">import axios from 'axios';
 
 const issueId = '7973eec7-0071-5a9d-54fd-00bd4a377f10'
-const url = `https://api.artree.jp/nft/issue/status/${issueId}`
+const url = `https://staging.api.artree.jp/nft/issue/status/${issueId}`
 
 const headers = {
     Authorization: `Basic ${base64.encode(apiKey + ':' + apiSecret)}`
@@ -183,6 +183,20 @@ const res = axios.get(url, {headers})
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

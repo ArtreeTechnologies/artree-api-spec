@@ -6,7 +6,7 @@
 ```ts
 import axios from 'axios';
 
-const url = 'https://api.artree.jp/nft/issue'
+const url = 'https://staging.api.artree.jp/nft/issue'
 const nftUrl = 'image.png'
 
 const request = {
