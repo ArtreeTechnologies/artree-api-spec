@@ -3,6 +3,7 @@ require "net/http"
 require "json"
 
 auth_header = Base64.strict_encode64("#{ARGV[0]}:#{ARGV[1]}")
+
 uri = URI.parse("https://staging.api.artree.jp/contract/deploy")
 req = Net::HTTP::Post.new(uri)
 http = Net::HTTP.new(uri.host, uri.port)
